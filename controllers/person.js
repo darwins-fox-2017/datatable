@@ -10,9 +10,12 @@ create = (req, res, next) => {
 }
 
 read = (req, res, next) => {
-  Person.find({}, (err, docs) => {
-    if(err) res.send(err)
-    res.json(docs)
+  // req.body.page or req.params.page = bla || 1 -> skip page * limit page
+  // req.body.page or req.params.limit = bla || 10 -> limit display per page
+  // req.body.page or req.params.sortBy = bla || id -> asc
+  Person.find({}).skip(5).limit(2).sort('_id').exec((err, docs) => {
+      if(err) res.send(err)
+      res.json(docs)
   })
 }
 
